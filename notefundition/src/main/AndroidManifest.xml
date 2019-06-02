@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NoteEditAcitvity"></activity>
+        <activity android:name=".NoteEditAcitvity"
+            android:launchMode="singleInstance"></activity>
         <activity android:name=".NoteEdit" />
         <activity android:name=".sample">
             <intent-filter>

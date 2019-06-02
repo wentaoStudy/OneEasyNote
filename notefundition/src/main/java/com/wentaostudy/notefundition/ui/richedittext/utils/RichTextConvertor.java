@@ -1,13 +1,14 @@
-package com.wentaostudy.notefundition.utils;
+package com.wentaostudy.notefundition.ui.richedittext.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 
-import com.liye.richedittextdemo.richedittext.IEmojiFactory;
-import com.liye.richedittextdemo.richedittext.span.BoldSpan;
-import com.liye.richedittextdemo.richedittext.span.EmojiSpan;
-import com.liye.richedittextdemo.richedittext.span.FakeImageSpan;
-import com.liye.richedittextdemo.richedittext.span.UrlSpan;
+
+import com.wentaostudy.notefundition.ui.richedittext.IEmojiFactory;
+import com.wentaostudy.notefundition.ui.richedittext.span.BoldSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.EmojiSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.FakeImageSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.UrlSpan;
 
 import org.ccil.cowan.tagsoup.HTMLSchema;
 import org.ccil.cowan.tagsoup.Parser;
@@ -15,6 +16,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
+//import org.xml.sax.Parser;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;

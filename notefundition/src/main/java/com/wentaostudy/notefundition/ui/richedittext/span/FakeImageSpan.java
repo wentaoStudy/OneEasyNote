@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition.span;
+package com.wentaostudy.notefundition.ui.richedittext.span;
 
 import android.text.TextPaint;
 import android.text.style.CharacterStyle;

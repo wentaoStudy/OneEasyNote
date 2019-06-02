@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition;
+package com.wentaostudy.notefundition.ui.richedittext;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,14 +9,15 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.liye.richedittextdemo.richedittext.effects.Effects;
-import com.liye.richedittextdemo.richedittext.span.EmojiSpan;
-import com.liye.richedittextdemo.richedittext.span.FakeImageSpan;
-import com.liye.richedittextdemo.richedittext.span.ImageSpan;
-import com.liye.richedittextdemo.richedittext.span.UrlSpan;
-import com.liye.richedittextdemo.richedittext.utils.BitmapUtils;
-import com.liye.richedittextdemo.richedittext.utils.DisplayUtils;
-import com.liye.richedittextdemo.richedittext.utils.RichTextUtils;
+
+import com.wentaostudy.notefundition.ui.richedittext.effects.Effects;
+import com.wentaostudy.notefundition.ui.richedittext.span.EmojiSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.FakeImageSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.ImageSpan;
+import com.wentaostudy.notefundition.ui.richedittext.span.UrlSpan;
+import com.wentaostudy.notefundition.ui.richedittext.utils.BitmapUtils;
+import com.wentaostudy.notefundition.ui.richedittext.utils.DisplayUtils;
+import com.wentaostudy.notefundition.ui.richedittext.utils.RichTextUtils;
 
 import java.util.ArrayList;
 import java.util.List;

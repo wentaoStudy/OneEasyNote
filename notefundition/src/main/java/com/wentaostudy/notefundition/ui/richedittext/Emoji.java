@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition;
+package com.wentaostudy.notefundition.ui.richedittext;
 
 import android.graphics.Bitmap;
 

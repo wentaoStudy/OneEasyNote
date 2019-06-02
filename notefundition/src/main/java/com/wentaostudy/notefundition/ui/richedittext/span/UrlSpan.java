@@ -1,9 +1,10 @@
-package com.wentaostudy.notefundition.span;
+package com.wentaostudy.notefundition.ui.richedittext.span;
 
 import android.text.style.ForegroundColorSpan;
 
 import com.wentaostudy.notefundition.R;
-import com.wentaostudy.notefundition.utils.ContextUtils;
+import com.wentaostudy.notefundition.ui.richedittext.utils.ContextUtils;
+
 
 /**
  * @author liye

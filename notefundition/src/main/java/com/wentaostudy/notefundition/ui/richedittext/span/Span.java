@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition.span;
+package com.wentaostudy.notefundition.ui.richedittext.span;
 
 /**
  * @author liye

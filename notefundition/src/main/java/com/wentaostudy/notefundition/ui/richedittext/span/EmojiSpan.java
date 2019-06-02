@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition.span;
+package com.wentaostudy.notefundition.ui.richedittext.span;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,9 +6,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 
+import com.wentaostudy.notefundition.ui.richedittext.Emoji;
+import com.wentaostudy.notefundition.ui.richedittext.utils.DisplayUtils;
 
-import com.wentaostudy.notefundition.Emoji;
-import com.wentaostudy.notefundition.utils.DisplayUtils;
 
 /**
  * @author liye

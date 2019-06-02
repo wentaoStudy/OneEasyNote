@@ -1,4 +1,4 @@
-package com.wentaostudy.notefundition.utils;
+package com.wentaostudy.notefundition.ui.richedittext.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
