@@ -2,6 +2,7 @@ package com.wentaostudy.notefundition.ui.richedittext;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -27,7 +28,7 @@ import java.util.List;
  * @version 4.1.0
  * @since: 15/12/24 下午3:56
  */
-public class RichEditText extends EditText {
+public class RichEditText extends AppCompatEditText {
 
     private static final int IMAGE_MAX_WIDTH = DisplayUtils.getWidthPixels() - 200;
     private static final int IMAGE_MAX_HEIGHT = DisplayUtils.getWidthPixels();

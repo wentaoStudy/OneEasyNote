@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.wentaostudy.notefundition.R;
+import com.wentaostudy.notefundition.ui.richedittext.utils.DisplayUtils;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DisplayUtils.init(this);
         setContentView(R.layout.activity_main);
         mButtonEdit = (Button) findViewById(R.id.button_edit);
         mButtonEdit.setOnClickListener(new View.OnClickListener() {

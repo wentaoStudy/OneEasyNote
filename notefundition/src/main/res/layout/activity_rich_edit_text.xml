@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.liye.richedittextdemo.richedittext.RichEditText
+            <com.wentaostudy.notefundition.ui.richedittext.RichEditText
                 android:id="@+id/edit_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -1,1 +1,1 @@
-include ':app', ':notefundition'
+include ':app', ':notefundition', ':xrichtext', ':XRichText'
