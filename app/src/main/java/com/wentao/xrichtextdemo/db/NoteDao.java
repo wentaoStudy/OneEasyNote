@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import com.wentao.xrichtextdemo.MyApplication;
 import com.wentao.xrichtextdemo.bean.Note;
 import com.wentao.xrichtextdemo.util.CommonUtil;
 
@@ -60,6 +61,8 @@ public class NoteDao {
                 note.setIsEncrypt(cursor.getInt(cursor.getColumnIndex("n_encrypt")));
                 note.setCreateTime(cursor.getString(cursor.getColumnIndex("n_create_time")));
                 note.setUpdateTime(cursor.getString(cursor.getColumnIndex("n_update_time")));
+                note.setObjectId(cursor.getString(cursor.getColumnIndex("n_object_id")));
+                note.setUserId(cursor.getString(cursor.getColumnIndex("n_user_id")));
                 noteList.add(note);
             }
         } catch (Exception e) {
@@ -81,8 +84,8 @@ public class NoteDao {
     public long insertNote(Note note) {
         SQLiteDatabase db = helper.getWritableDatabase();
         String sql = "insert into db_note(n_title,n_content,n_group_id,n_group_name," +
-                "n_type,n_bg_color,n_encrypt,n_create_time,n_update_time) " +
-                "values(?,?,?,?,?,?,?,?,?)";
+                "n_type,n_bg_color,n_encrypt,n_create_time,n_update_time , n_object_id , n_user_id) " +
+                "values(?,?,?,?,?,?,?,?,?,?,?)";
 
         long ret = 0;
         //sql = "insert into ex_user(eu_login_name,eu_create_time,eu_update_time) values(?,?,?)";
@@ -98,6 +101,8 @@ public class NoteDao {
             stat.bindLong(7, note.getIsEncrypt());
             stat.bindString(8, CommonUtil.date2string(new Date()));
             stat.bindString(9, CommonUtil.date2string(new Date()));
+            stat.bindString(10 , "");
+            stat.bindString(11 , MyApplication.phoneNumber);
             ret = stat.executeInsert();
             db.setTransactionSuccessful();
         } catch (SQLException e) {
@@ -126,12 +131,15 @@ public class NoteDao {
         values.put("n_bg_color", note.getBgColor());
         values.put("n_encrypt", note.getIsEncrypt());
         values.put("n_update_time", CommonUtil.date2string(new Date()));
+        values.put("n_object_id" , note.getObjectId());
+        values.put("n_user_id" , note.getUserId());
         db.update("db_note", values, "n_id=?", new String[]{note.getId()+""});
         db.close();
     }
 
     /**
      * 删除笔记
+     * 暂时还没有添加网络端功能
      */
     public int deleteNote(int noteId) {
         SQLiteDatabase db = helper.getWritableDatabase();

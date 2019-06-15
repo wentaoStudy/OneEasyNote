@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">XRichText</string>
+    <string name="app_name">OneEasyNote</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_new">NewActivity</string>
     <string name="title_activity_note">NoteActivity</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="home">主页</string>
+    <string name="change_bg">更换皮肤</string>
+    <string name="loginin">用户</string>
+    <string name="push_to_net">更新网络端笔记</string>
 </resources>

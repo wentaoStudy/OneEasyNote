@@ -5,17 +5,23 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100"
     android:paddingTop="@dimen/activity_margin_5"
     android:paddingBottom="@dimen/activity_margin_5"
     android:paddingLeft="@dimen/activity_margin_10"
     android:paddingRight="@dimen/activity_margin_10"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.wentao.xrichtextdemo.ui.MainActivity"
+    android:background="@android:color/transparent"
     tools:showIn="@layout/activity_main">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list_main"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/main_content_swiprefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:background="@android:color/transparent"
+            android:id="@+id/rv_list_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

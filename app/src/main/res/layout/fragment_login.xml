@@ -1,0 +1,135 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wentao.xrichtextdemo.ui.LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="18sp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome Back!"
+                android:textColor="@color/Black"
+                android:layout_marginLeft="@dimen/my_margin"
+                android:textSize="36sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/my_margin"
+                android:textSize="@dimen/simple_textsize"
+                android:text="Login"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="66sp" />
+            <EditText
+                android:id="@+id/SignIn_Account_ID"
+                android:theme="@style/MyEditText"
+                android:layout_marginLeft="@dimen/my_margin"
+                android:layout_marginRight="@dimen/my_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColorHint="@color/Gray"
+                android:textSize="@dimen/simple_textsize"
+                android:hint="      Account"
+                android:digits="0123456789"
+                android:drawablePadding="@dimen/my_margin"
+                android:drawableLeft="@mipmap/user"
+                />
+            <EditText
+                android:id="@+id/SignIn_Password_ID"
+                android:theme="@style/MyEditText"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="@dimen/my_margin"
+                android:layout_marginRight="@dimen/my_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColorHint="@color/Gray"
+                android:textSize="@dimen/simple_textsize"
+                android:hint="      PassWord"
+                android:inputType="textPassword"
+                android:drawablePadding="@dimen/my_margin"
+                android:drawableLeft="@mipmap/password"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="22dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="@dimen/my_margin"
+                android:layout_marginLeft="@dimen/my_margin">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/SignIn_ForgotPassword_Btn_ID"
+                        android:layout_gravity="left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_transparent"
+                        android:textAllCaps="false"
+                        android:textColorHint="@color/Gray"
+                        android:textColor="@color/MyColor"
+                        android:text="Forgot Password"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/SignIn_Signin_Btn_ID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape"
+                        android:textAllCaps="false"
+                        android:textColorHint="@color/Gray"
+                        android:textColor="@color/White"
+                        android:text="Sign In"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="36sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22sp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dont have an account ?"
+                    android:textSize="22sp"/>
+                <Button
+                    android:id="@+id/SignIn_To_SignUp_Btn_ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_transparent"
+                    android:textAllCaps="false"
+                    android:textColorHint="@color/Gray"
+                    android:textColor="@color/MyColor"
+                    android:text=" Sign Up"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout >
+
+</FrameLayout>
+
+

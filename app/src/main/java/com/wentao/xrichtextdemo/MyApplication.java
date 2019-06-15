@@ -4,6 +4,8 @@ import android.app.Application;
 
 public class MyApplication extends Application {
 
+    public static boolean ifSignIn = false;
+    public static String phoneNumber = "";
     @Override
     public void onCreate() {
         super.onCreate();

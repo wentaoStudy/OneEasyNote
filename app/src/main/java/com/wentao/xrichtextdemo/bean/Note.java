@@ -2,6 +2,8 @@ package com.wentao.xrichtextdemo.bean;
 
 import java.io.Serializable;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * 作者：Sendtion on 2016/10/24 0024 15:00
  * 邮箱：sendtion@163.com
@@ -9,8 +11,10 @@ import java.io.Serializable;
  * 描述：笔记实体类
  */
 
-public class Note implements Serializable {
+public class Note extends BmobObject implements Serializable {
 
+    private String myObjectId;
+    private String userId;
     private int id;//笔记ID
     private String title;//笔记标题
     private String content;//笔记内容
@@ -21,6 +25,22 @@ public class Note implements Serializable {
     private int isEncrypt ;//是否加密，0未加密，1加密
     private String createTime;//创建时间
     private String updateTime;//修改时间
+
+    public String getMyObjectId() {
+        return myObjectId;
+    }
+
+    public void setMyObjectId(String myObjectId) {
+        this.myObjectId = myObjectId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;

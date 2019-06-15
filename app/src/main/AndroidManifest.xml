@@ -51,6 +51,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
+        <!-- 用于提供bmob所需 -->
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.sendtion.xrichtext.BmobContentProvider" />
     </application>
 
 </manifest>

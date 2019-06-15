@@ -112,6 +112,7 @@ public class MyNoteListAdapterWithImage extends RecyclerView.Adapter<MyNoteListA
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //Log.i(TAG, "###onBindViewHolder: ");
+        Log.d(TAG, "UpdateTime: " + mNotes.get(position).getUpdateTime());
         final Note note = mNotes.get(position);
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(note);

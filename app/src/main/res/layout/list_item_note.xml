@@ -7,20 +7,22 @@
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true"
     app:cardCornerRadius="3dp"
-    app:cardElevation="1dp">
+    app:cardElevation="1dp"
+    android:background="@color/grey_700"
+    android:alpha="0.69">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_margin_10"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="@android:color/transparent" >
 
         <TextView
             android:id="@+id/tv_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="标题"
-            android:textColor="@color/grey_700"
+            android:textColor="@color/grey_1000"
             android:textSize="@dimen/text_size_18" />
 
         <TextView
@@ -31,7 +33,7 @@
             android:layout_below="@+id/tv_list_title"
             android:maxLines="2"
             android:text="笔记摘要"
-            android:textColor="@color/grey_500"
+            android:textColor="@color/grey_1000"
             android:textSize="@dimen/text_size_14" />
 
         <RelativeLayout
@@ -46,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="时间"
-                android:textColor="@color/grey_400"
+                android:textColor="@color/grey_1000"
                 android:textSize="@dimen/text_size_14" />
 
             <TextView
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="分类"
-                android:textColor="@color/grey_400"
+                android:textColor="@color/grey_1000"
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
     </RelativeLayout>
