@@ -1,10 +1,14 @@
 package com.wentao.xrichtextdemo.ui;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,20 +17,35 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
+import com.bumptech.glide.Glide;
+import com.haozhang.lib.AnimatedRecordingView;
 import com.sendtion.xrichtextdemo.R;
 //import MyNoteListAdapter;
 import com.wentao.xrichtextdemo.MyApplication;
 import com.wentao.xrichtextdemo.bean.Note;
+import com.wentao.xrichtextdemo.bean.Photo;
 import com.wentao.xrichtextdemo.bean.User;
 import com.wentao.xrichtextdemo.db.NoteDao;
+import com.wentao.xrichtextdemo.db.PhotoDao;
+import com.wentao.xrichtextdemo.db.RadioDao;
+import com.wentao.xrichtextdemo.util.ImageUtils;
+import com.wentao.xrichtextdemo.util.MyGlideEngine;
+import com.wentao.xrichtextdemo.util.SDCardUtil;
 import com.wentao.xrichtextdemo.util.SystemUtils;
+import com.wentao.xrichtextdemo.widget.CircleImageView;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,10 +55,12 @@ import java.util.Map;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -55,30 +76,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //    private MyNoteListAdapterWithImage mNoteListAdapter;
     private List<Note> noteList;
     private NoteDao noteDao;
+    private PhotoDao photoDao;
     private int groupId;//分类ID
 //    private String groupName;
 //    private FloatingActionButton fab;
     protected DrawerLayout drawer;
+    private CircleImageView ivHead;
     public NoteListFragment noteListFragment;
+    public RecorderFragment recorderFragment;
+    Boolean autoLogin = true;
+    Boolean audioMainPage = false;
     //存放需要的用户权限
-    private String[] permissions = {Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String[] permissions = {Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE , Manifest.permission.RECORD_AUDIO};
 
     List<Note> note_list_query_from_net = null;
+
+    private void prfLoad() {
+        SharedPreferences preferences = this.getSharedPreferences("settings",MODE_PRIVATE);
+        autoLogin = preferences.getBoolean(SettingFragment.SWITCH_AUTO_LOGIN , false);
+        audioMainPage = preferences.getBoolean(SettingFragment.SWITCH_AUDIO_MAIN_PAGE , false);
+    }
+
+    private static final int REQUEST_CODE_CHOOSE = 23;//定义请求码常量
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //用于初始化Bmob云，使用aapkey初始化
-        Bmob.initialize(this , "Repalce There with your own Bmob apk id");
-
+        Bmob.initialize(this , "ff5c29133b8b8f55b14844d7db71aee8");
         setContentView(R.layout.activity_main);
+        prfLoad();
         getPermission();
-
-
 //        initBgPic();
         initView();
-        autoLogin();
-
+        if(autoLogin){
+            autoLogin();
+        }
 
     }
 
@@ -102,6 +135,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initBgPic();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        ivHead  =  headerView.findViewById(R.id.nav_header_user_imageview);
+        ivHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callGallery();
+            }
+        });
+        SharedPreferences myget = getSharedPreferences("images" , Context.MODE_PRIVATE);
+        File file = new File(myget.getString("head_image" , ""));
+        Glide.with(this).load(file).override(666,666).into(ivHead);
         drawer.setScrimColor(Color.TRANSPARENT);
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -136,6 +180,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
+
+
     }
 
     private void initBgPic(){
@@ -155,8 +201,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         noteListFragment=new NoteListFragment();
-        ft.replace(R.id.main_fraglayout, noteListFragment,null);
-        ft.commit();
+        recorderFragment=new RecorderFragment();
+        if(audioMainPage){
+            ft.replace(R.id.main_fraglayout, recorderFragment,null);
+            ft.commit();
+        }else {
+            ft.replace(R.id.main_fraglayout, noteListFragment,null);
+            ft.commit();
+        }
+
     }
 
     @Override
@@ -186,9 +239,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
         ft.replace(R.id.main_fraglayout, fragment,null);
-            ft.addToBackStack(fragment.toString());
+        ft.addToBackStack(fragment.toString());
         ft.commit();
     }
+
 
     //@SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -211,8 +265,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_push_to_net:
                 pushToNet();
+                //因为bmob文件服务器域名问题而流产，准备更换为自己写的服务器
+                //pushImageToNet();
                 break;
-
+            case R.id.voice_note:
+                changeFragment(recorderFragment);
+                break;
+            case R.id.nav_setting:
+                SettingFragment settingFragment = new SettingFragment();
+                changeFragment(settingFragment);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -301,7 +363,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     //if List A contains B , judge by Note id
-    private boolean ifContains(List<Note> A , Note B){
+    public static boolean ifContains(List<Note> A , Note B){
         int count = 0;
         for(Note note : A){
             Log.d(TAG, "ifContains: " + ":BID" + B.getId() +":AID" + note.getId());
@@ -317,6 +379,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return true;
         }
     }
+
+    public static boolean ifContains(List<Photo> A , BmobFile B){
+        int count = 0;
+        for(Photo photo : A){
+            Log.d(TAG, "ifContains: " + ":BID" + B.getFilename() +":AID" + photo.getPhoto().getFilename());
+            if(B.getFilename().equals(photo.getPhoto().getFilename())){
+                count++;
+            }
+        }
+        if(count == 0){
+            Log.d(TAG, "ifContains: " + count);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
 
     private void pushToNet(){
         final List<Note> note_list = getLatestedNoteList();
@@ -426,5 +506,135 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
+    }
+
+    //Method By WenTao
+
+    public static int[]  getIndexOfImage(String note_content){
+        int image_beginindex = 0;
+        int image_endindex = -1;
+        int count = 0;
+        int indexs[] = new int[101];
+        //这里调用indexs[]的第一个作为数组的存放个数，考虑到图片的存放数量，暂时设计用户不会
+        //一次性传入50张以上的照片，所以设计大小为100
+        while (image_beginindex != -1){
+            indexs[0] = count;
+            image_beginindex = note_content.indexOf("<img" , image_endindex);
+            image_endindex = note_content.indexOf("/>" , image_beginindex);
+            if(image_beginindex == -1)
+                break;
+            count ++;
+            indexs[2*count] = image_endindex;
+            indexs[2*count -1] = image_beginindex;
+
+            image_beginindex = image_beginindex;
+        }
+        return indexs;
+    }
+
+    public static String[] getImagesContent(String content){
+        int [] a = getIndexOfImage(content);
+        String Result[] = new String[a[0]];
+        for(int i = 0 ; i <  a[0] ; i++) {
+            Result[i] = content.substring(a[(i+1)*2 -1] , a[(i+1)*2] + 2);
+        }
+        return Result;
+    }
+
+    public static String[] getImagesAddress(String contents){
+        String [] mycontent = getImagesContent(contents);
+        String [] Result = new String[mycontent.length];
+        int i = 0;
+        for (String content : mycontent){
+            int srcIndex = content.indexOf("src");
+            int contentBeginIndex = content.indexOf("\"" , srcIndex );
+            int contentEndIndex = content.indexOf("\"" , contentBeginIndex + 1);
+            Result[i++] = content.substring(contentBeginIndex + 1 , contentEndIndex );
+        }
+        return Result;
+    }
+
+    private void pushImageToNet(){
+        final List<Note> note_list = getLatestedNoteList();
+        for(Note myNote : note_list){
+            final String[] myImageAddress = getImagesAddress(myNote.getContent());
+            final Note ThereMyNote = myNote;
+
+                for(String myAdr : myImageAddress){
+                    final BmobFile bmobFile = new BmobFile(new File(myAdr));
+                    Log.d(TAG, "done:bmobFile.getFilename() " + bmobFile.getFilename() );
+                        final Photo photo = new Photo();
+                        photo.setId(ThereMyNote.getId());
+                        photo.setUserId(ThereMyNote.getUserId());
+                        bmobFile.upload(new UploadFileListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                photo.setPhoto(bmobFile);
+                                photo.save(new SaveListener<String>() {
+                                    @Override
+                                    public void done(String s, BmobException e) {
+
+                                    }
+                                });
+                            }
+                        });
+                    }
+        }
+    }
+
+    @Override
+    public void showToast(String text) {
+        super.showToast(text);
+    }
+
+    /**
+     * 调用图库选择
+     */
+    private void callGallery(){
+//        //调用系统图库
+//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");// 相片类型
+//        startActivityForResult(intent, 1);
+
+        Matisse.from(this)
+                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG, MimeType.GIF))//照片视频全部显示MimeType.allOf()
+                .countable(true)//true:选中后显示数字;false:选中后显示对号
+                .maxSelectable(1)//最大选择数量为1
+                //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))//图片显示表格的大小
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)//图像选择和预览活动所需的方向
+                .thumbnailScale(0.85f)//缩放比例
+                .theme(R.style.Matisse_Zhihu)//主题  暗色主题 R.style.Matisse_Dracula
+                .imageEngine(new MyGlideEngine())//图片加载方式，Glide4需要自定义实现
+                .capture(true) //是否提供拍照功能，兼容7.0系统需要下面的配置
+                //参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                .captureStrategy(new CaptureStrategy(true,"com.sendtion.matisse.fileprovider"))//存储到哪里
+                .forResult(REQUEST_CODE_CHOOSE);//请求码
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                if (requestCode == 1){
+                    //处理调用系统图库
+                } else if (requestCode == REQUEST_CODE_CHOOSE){
+                    //异步方式插入图片
+                    List<Uri> mSelected = Matisse.obtainResult(data);
+                    String imagePath = SDCardUtil.getFilePathFromUri(MainActivity.this,  mSelected.get(0));
+                    //Log.e(TAG, "###path=" + imagePath);
+                    Bitmap bitmap = ImageUtils.getSmallBitmap(imagePath, 99, 99);//压缩图片
+                    //bitmap = BitmapFactory.decodeFile(imagePath);
+                    imagePath = SDCardUtil.saveToSdCard(bitmap);
+                    File file = new File(imagePath);
+                    Glide.with(this).load(file).override(369,369).into(ivHead);
+                    SharedPreferences.Editor editor = getSharedPreferences("images" , Context.MODE_PRIVATE).edit();
+                    editor.putString("head_image" , imagePath);
+                    editor.apply();
+
+                }
+            }
+        }
     }
 }

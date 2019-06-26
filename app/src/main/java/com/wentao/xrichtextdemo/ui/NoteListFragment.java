@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -27,20 +28,25 @@ import com.sendtion.xrichtextdemo.R;
 import com.wentao.xrichtextdemo.MyApplication;
 import com.wentao.xrichtextdemo.adapter.MyNoteListAdapterWithImage;
 import com.wentao.xrichtextdemo.bean.Note;
+import com.wentao.xrichtextdemo.bean.Photo;
 import com.wentao.xrichtextdemo.db.NoteDao;
 import com.wentao.xrichtextdemo.util.SystemUtils;
 import com.wentao.xrichtextdemo.view.SpacesItemDecoration;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import static cn.bmob.v3.BmobRealTimeData.TAG;
 
@@ -252,6 +258,7 @@ public class NoteListFragment extends Fragment {
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
+                        getImageFromNet();
                         refreshNetNoteList();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -271,7 +278,7 @@ public class NoteListFragment extends Fragment {
     }
 
     private void refreshNetNoteList(){
-        List<Note> note_list = getLatestedNoteList();
+        final List<Note> note_list = getLatestedNoteList();
         BmobQuery<Note> query = new BmobQuery<>();
         query.addWhereEqualTo("userId" , MyApplication.phoneNumber);
         query.findObjects(new FindListener<Note>() {
@@ -281,44 +288,87 @@ public class NoteListFragment extends Fragment {
                 for (Note note : list){
                     Log.d(TAG, "ResultFromNet" + note.toString());
                 }
-            }
-        });
-        if(note_list_query_from_net != null){
-                for (Note net_Note : note_list_query_from_net){
-                    int count = 0;
-                    for (Note note : note_list) {
-                        if (note.getId() == net_Note.getId()) {
-                            count++;
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Date net_Note_Date = new Date();
-                            Date Note_Date = net_Note_Date;
-                            try {
-                                net_Note_Date = sdf.parse(net_Note.getUpdateTime());
-                                Note_Date = sdf.parse(note.getUpdateTime());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (net_Note_Date.after(Note_Date)) {
-                                if (noteDao == null)
-                                    noteDao = new NoteDao(mContext);
-                                note = net_Note;
-                                noteDao.updateNote(note);
+                if(note_list_query_from_net != null){
+                    for (Note net_Note : note_list_query_from_net){
+                        int count = 0;
+                        for (Note note : note_list) {
+                            if (note.getId() == net_Note.getId()) {
+                                count++;
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                Date net_Note_Date = new Date();
+                                Date Note_Date = net_Note_Date;
+                                try {
+                                    net_Note_Date = sdf.parse(net_Note.getUpdateTime());
+                                    Note_Date = sdf.parse(note.getUpdateTime());
+                                } catch (ParseException e1e) {
+                                    e1e.printStackTrace();
+                                }
+                                Log.d(TAG, "done: " + "ATIME:" + net_Note.getUpdateTime() + "BTIME" + note.getUpdateTime() );
+                                if (net_Note_Date.after(Note_Date)) {
+                                    Log.d(TAG, "done: local Text has updated");
+                                    if (noteDao == null)
+                                        noteDao = new NoteDao(mContext);
+                                    note = net_Note;
+                                    noteDao.updateNote(note);
+                                }
                             }
                         }
-                    }
-                    if (count == 0) {
-                        if (noteDao == null)
-                            noteDao = new NoteDao(mContext);
-                        noteDao.insertNote(net_Note);
-                    }
+                        if (count == 0) {
+                            if (noteDao == null)
+                                noteDao = new NoteDao(mContext);
+                            noteDao.insertNote(net_Note);
+                        }
+                    }refreshNoteList();
                 }
+            }
+        });
 
+    }
+
+    private void getImageFromNet(){
+        final List<Note> note_list = getLatestedNoteList();
+        for(Note myNote : note_list){
+            final String[] myImageAddress = MainActivity.getImagesAddress(myNote.getContent());
+            final Note ThereMyNote = myNote;
+            if(myImageAddress.length != 0){////.........
+                BmobQuery<Photo> query = new BmobQuery<>();
+                query.addWhereEqualTo("userId" , MyApplication.phoneNumber);
+                Log.d(TAG, "getImageFromNet: " + MyApplication.phoneNumber);
+                query.addWhereEqualTo("id" , myNote.getId());
+                Log.d(TAG, "getImageFromNet: " + myNote.getId());
+                query.findObjects(new FindListener<Photo>() {
+                    @Override
+                    public void done(List<Photo> list, BmobException e) {
+                        Log.d(TAG, "done: getThree Image" );
+                        if(e == null){
+                            for (Photo photo : list){
+                                int count = 0;
+//                                for(String myAdr : myImageAddress){
+//                                    final BmobFile bmobFile = new BmobFile(new File(myAdr));
+//                                    Log.d(TAG, "done:bmobFile.getFilename() " + bmobFile.getFilename() );
+//                                    Log.d(TAG, "done: " + myAdr);
+//                                    if(bmobFile.getFilename() != null){
+//                                        if(bmobFile.getFilename().equals(photo.getPhoto().getFilename())){
+//                                            count++;
+//                                        }
+//                                    }
+//
+//                                }
+                                downloadFile(photo.getPhoto());
+                            }
+                        }else {
+                            Log.d(TAG, "done: " + e.getMessage());
+                        }
+                    }
+                });
+
+            }
         }
-        refreshNoteList();
     }
 
 
-    private List<Note> getLatestedNoteList(){
+
+    public List<Note> getLatestedNoteList(){
         if (noteDao == null)
             noteDao = new NoteDao(mContext);
         noteList = noteDao.queryNotesAll(groupId);
@@ -329,5 +379,37 @@ public class NoteListFragment extends Fragment {
     void showToast(String msg){
         Toast.makeText(mContext , msg , Toast.LENGTH_SHORT);
     }
+
+
+    private void downloadFile(BmobFile file){
+        Log.d(TAG, "downloadFile: " + file.getFilename());
+        //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()+"/bmob/"
+        File saveFile = new File(Environment.getExternalStorageDirectory(), file.getFilename());
+        file.download(saveFile, new DownloadFileListener() {
+
+            @Override
+            public void onStart() {
+                showToast("开始下载");
+            }
+
+            @Override
+            public void done(String savePath,BmobException e) {
+                if(e==null){
+                    showToast("下载成功,保存路径:"+savePath);
+                    Log.d(TAG, "done: "+savePath);
+                }else{
+                    showToast("下载失败："+e.getErrorCode()+","+e.getMessage());
+                    Log.d(TAG, "done: "+e.getErrorCode()+","+e.getMessage() );
+                }
+            }
+
+            @Override
+            public void onProgress(Integer value, long newworkSpeed) {
+                Log.i("bmob","下载进度："+value+","+newworkSpeed);
+            }
+
+        });
+    }
+
 
 }

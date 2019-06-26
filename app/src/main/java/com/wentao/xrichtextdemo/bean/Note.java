@@ -1,5 +1,7 @@
 package com.wentao.xrichtextdemo.bean;
 
+import com.wentao.xrichtextdemo.util.CommonUtil;
+
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
@@ -25,6 +27,10 @@ public class Note extends BmobObject implements Serializable {
     private int isEncrypt ;//是否加密，0未加密，1加密
     private String createTime;//创建时间
     private String updateTime;//修改时间
+
+    public Note(){
+        id = CommonUtil.getIdByTime();
+    }
 
     public String getMyObjectId() {
         return myObjectId;

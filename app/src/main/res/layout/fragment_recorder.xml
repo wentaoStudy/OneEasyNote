@@ -1,0 +1,40 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:background="@android:color/transparent"
+        android:id="@+id/rv_list_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <com.haozhang.lib.AnimatedRecordingView
+
+        android:layout_gravity="bottom"
+        android:id="@+id/recording"
+        android:layout_width="match_parent"
+        android:layout_height="99sp"
+        />
+    <Button
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="99sp"
+        android:layout_marginRight="99sp"
+        android:background="@android:color/transparent"
+        android:layout_height="99sp"
+        android:id="@+id/Say">
+    </Button>
+    <ImageView
+        android:id="@+id/recorder_fragment_mic"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="99sp"
+        android:padding="18sp"
+        android:src="@drawable/ic_mic_none_black_24dp"/>
+
+</android.support.design.widget.CoordinatorLayout>

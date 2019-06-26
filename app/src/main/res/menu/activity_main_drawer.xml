@@ -14,8 +14,13 @@
             android:title="@string/find" />-->
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_48dp"
-            android:title="@string/home"
+            android:icon="@drawable/ic_book_black_24dp"
+            android:title="图文笔记"
+            />
+        <item
+            android:id="@+id/voice_note"
+            android:icon="@drawable/ic_mic_black_24dp"
+            android:title="语音笔记"
             />
         <item
             android:id="@+id/nav_change_bg"
@@ -35,6 +40,11 @@
                 android:id="@+id/nav_login"
                 android:icon="@drawable/ic_person_outline_black_24dp"
                 android:title="@string/loginin"
+                />
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="设置"
                 />
          </menu>
  </item>

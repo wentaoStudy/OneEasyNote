@@ -182,6 +182,7 @@ public class LoginFragment extends Fragment {
                     save_User_Info(userName.getText().toString() , passWord.getText().toString());
                     SignIn( userName.getText().toString() ,passWord.getText().toString() ,mContext);
                 case R.id.SignIn_To_SignUp_Btn_ID:
+                    ((MainActivity)getActivity()).changeFragment(new SignUpFragment());
                     break;
                 case R.id.SignIn_ForgotPassword_Btn_ID:
                     break;

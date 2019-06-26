@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_note"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.69">
+
+    <!--app:cardPreventCornerOverlap="true"-->
+    <!--app:cardElevation="1dp"-->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="99sp"
+        android:layout_marginTop="0sp"
+        android:layout_marginBottom="0sp"
+        android:layout_alignParentBottom = "true"
+        android:background="@android:color/transparent"
+        android:alpha="0.69">
+        <View
+            android:id="@+id/shuxian"
+            android:layout_marginLeft="66sp"
+            android:alpha="1"
+            android:background="@android:color/background_dark"
+            android:layout_height="match_parent"
+            android:layout_width="3dp"
+            />
+        <View
+            android:id="@+id/hengxian"
+            android:layout_marginTop="66sp"
+            android:layout_marginLeft="66sp"
+            android:background="@android:color/background_dark"
+            android:layout_height="2dp"
+            android:layout_width="66sp"
+            />
+        <TextView
+            android:id="@+id/TextView_Create_Time"
+            android:layout_toRightOf="@+id/shuxian"
+            android:layout_below="@+id/hengxian"
+            android:text="创建时间"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/TextView_Time_Length"
+            android:layout_toRightOf="@+id/shuxian"
+            android:layout_above="@+id/TextView_Create_Time"
+            android:textSize="18sp"
+            android:text="Time Length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+     
+</android.support.v7.widget.CardView>

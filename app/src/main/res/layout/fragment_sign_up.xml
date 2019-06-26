@@ -1,13 +1,107 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wentao.xrichtextdemo.ui.SignUpFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25sp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="0sp"
+            android:layout_height="wrap_content"
 
-</FrameLayout>
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="    Create an Account"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/simple_textsize_plus" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="268sp"
+            >
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <com.wentao.xrichtextdemo.widget.CircleImageView
+                    android:id="@+id/SignUp_Head_Portrait_Image_ID"
+                    android:src="@drawable/ic_camera_enhance_black_24dp"
+                    android:layout_width="138sp"
+                    android:layout_height="138sp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/my_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/SignUp_PhoneNumber_ID"
+                android:theme="@style/MyEditText"
+                android:layout_marginBottom="@dimen/my_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone number"
+                android:lines="1"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textSize="@dimen/simple_textsize"/>
+            <EditText
+                android:id="@+id/SignUp_Password_ID"
+                android:theme="@style/MyEditText"
+                android:layout_marginBottom="@dimen/my_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PassWord"
+                android:lines="1"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textSize="@dimen/simple_textsize"/>
+            <EditText
+                android:id="@+id/SignUp_Password_Again_ID"
+                android:theme="@style/MyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PassWord Again"
+                android:lines="1"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textSize="@dimen/simple_textsize"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/SignUp_SignUp_Btn_ID"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/my_margin"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/simple_textsize"
+        android:textAllCaps="false"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shape"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

@@ -1,1 +1,1 @@
-include ':app', ':xrichtext'
+include ':app', ':xrichtext', ':cuterecorder'

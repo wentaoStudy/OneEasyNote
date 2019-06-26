@@ -26,7 +26,7 @@ public class NoteDao {
     private MyOpenHelper helper;
 
     public NoteDao(Context context) {
-        helper = new MyOpenHelper(context);
+        helper = MyOpenHelper.getInstance(context);
     }
 
     /**
@@ -84,8 +84,8 @@ public class NoteDao {
     public long insertNote(Note note) {
         SQLiteDatabase db = helper.getWritableDatabase();
         String sql = "insert into db_note(n_title,n_content,n_group_id,n_group_name," +
-                "n_type,n_bg_color,n_encrypt,n_create_time,n_update_time , n_object_id , n_user_id) " +
-                "values(?,?,?,?,?,?,?,?,?,?,?)";
+                "n_type,n_bg_color,n_encrypt,n_create_time,n_update_time , n_object_id , n_user_id , n_id ) " +
+                "values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
         long ret = 0;
         //sql = "insert into ex_user(eu_login_name,eu_create_time,eu_update_time) values(?,?,?)";
@@ -103,6 +103,7 @@ public class NoteDao {
             stat.bindString(9, CommonUtil.date2string(new Date()));
             stat.bindString(10 , "");
             stat.bindString(11 , MyApplication.phoneNumber);
+            stat.bindLong(12, note.getId());
             ret = stat.executeInsert();
             db.setTransactionSuccessful();
         } catch (SQLException e) {

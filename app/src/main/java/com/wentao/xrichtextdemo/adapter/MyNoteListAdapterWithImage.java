@@ -23,10 +23,10 @@ import java.util.List;
 import static com.wenming.library.upload.UploadService.TAG;
 
 /**
- * 作者：Sendtion on 2016/10/21 0021 16:59
- * 邮箱：sendtion@163.com
- * 博客：http://sendtion.cn
- * 描述：笔记列表适配器
+ * 作者：WenTaoLing on 2019/6/15 0021 16:59
+ * 邮箱：null
+ * 博客：null
+ * 描述：带图片的笔记列表适配器
  */
 
 public class MyNoteListAdapterWithImage extends RecyclerView.Adapter<MyNoteListAdapterWithImage.ViewHolder>
@@ -159,8 +159,6 @@ public class MyNoteListAdapterWithImage extends RecyclerView.Adapter<MyNoteListA
     }
 
 
-
-
     //Method By WenTao
 
     public static int[]  getIndexOfImage(String note_content){
@@ -233,7 +231,5 @@ public class MyNoteListAdapterWithImage extends RecyclerView.Adapter<MyNoteListA
             shortCut = mnote_content;
         return shortCut;
     }
-
-
 
 }

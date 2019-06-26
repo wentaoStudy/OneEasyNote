@@ -144,4 +144,17 @@ public class CommonUtil {
         return strDate;
     }
 
+    public static int getIdByTime() {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyddHHmmss");
+        String nameByTime = dateFormat.format(now);
+        try {
+            int a = Integer.parseInt(nameByTime);
+            return a;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
