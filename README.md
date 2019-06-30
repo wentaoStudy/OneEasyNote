@@ -1,260 +1,99 @@
-# XRichText
-[![](https://jitpack.io/v/sendtion/XRichText.svg)](https://jitpack.io/#sendtion/XRichText)
+#OneEasyNote
+非常简单的一款笔记记录软件，方便记录文字以及语音笔记，同时可以再网络端同步文字笔记，可以再笔记中添加图片内容，可以将文字内容分享给好友的简单的笔记软件，我们开发的初衷是通过自己的能力，开发出一款我们能够使用的，不受限制的简介，轻便的笔记软件，同时实现平常内容记录功能；
 
-一个Android富文本类库，支持图文混排，支持编辑和预览，支持插入和删除图片。
+##
+三、项目的主要功能
+3、1首先打开app，打开app后会看到登陆界面，使用Bmob数据库存放已经注册的用户名，如图3.1
+（因为这里是我们第一次使用，会自动跳转到登录界面，使用权限已经申请）
+ 
+图3.1	 
+图3.2	 
+图3.3
+3、2注册页面，连接Bmob，实现用户注册功能
+3、3主界面主要功能实现
+ 
+图3.4	 
+图3.5	 
+图3.6
+3,4添加笔记
+3.5添加标题，默认读取创建时间，插入图片内容
+3.6存储界面（长按删除）
+ 
+图3.7	 
+图3.8	 图3.9
+3.7 用户界面，主要功能
+3.8 更换皮肤主题
+3.9 语音笔记界面
+  图3.10	 图3.11 	 
+图3.12
+3.10获取权限
+3.11及时更新数据（服务器）
+3.12桌面appWeiget
+ 图3.13	 图3.14	 
+3.13用户设置
+3.14 Matisse图片选择功能
+头像功能部分，还有文档需要图片文件的部分，都是可以调用本地相册进行使用的，同时对使用的图片进行记录，更换主题部分，考虑到使用者对图片像素的选择可能会出现图片效果不完美，因此没有开放自定义从文件选择图片数量，而是使用选择方式是主题完美
+四、项目的主要特色介绍
+    1.可以多终端登录，实现数据库云端存储，数据收集和共享
+2.具有好看的皮肤和头像供君选择
+3.支持文档笔记和语音笔记存储
+4.可读取本地数据，获取内容实现功能
+五、项目的关键技术
+Sqlite 3 数据库
+表	表名
+Goup表	db_group
+User表	db_user
+Note表	db_note
+Radio表	db_radio
 
-### 实现的原理：
-- 使用ScrollView作为最外层布局包含LineaLayout，里面填充TextView和ImageView。
-- 删除的时候，根据光标的位置，删除TextView和ImageView，文本自动合并。
-- 生成的数据为list集合，可自定义处理数据格式。
 
-### 注意事项
-- xrichtext库中引入了Glide库版本为4.9.0，自己项目中不需要再引入，如果想引入自己的项目，请把Glide排除在外，support支持库同样也可以排除。
-- Demo中图片选择器为知乎开源库Matisse，适配Android 7.0系统使用FileProvider获取图片路径。
-- 开发环境更新为 AS 3.1.2 + Gradle 4.4 + compileSDK 28 + support library 28.0.0，导入项目报版本错误时，请手动修改为自己的版本。
-- **V1.4版本开放了编辑笔记时的删除图片接口，请自己在Activity中设置OnRtDeleteImageListener接口。**
-- **V1.6版本升级RxJava到2.2.3版本，RxAndroid到2.1.0版本。设置字体大小时需要带着单位，如app:rt_editor_text_size="16sp"。**
-- 请参考Demo的实现，进行了解本库。可以使用Gradle引入，也可以下载源码进行修改。
-- 如有问题，欢迎提出。**欢迎加入QQ群交流：745215148。**
+Sqlite3 db_user表
+列名	含义
+u_name	用户姓名
+u_id	用户id
+u_group	用户所属组
+u_number	用户电话号码
+u_password	用户密码
+Sqlite3 db_note表
+列名	含义
+n_id	笔记id
+n_userid	笔记所属者id
+n_title	笔记标题
+n_ content	笔记内容
+n_crate_time	笔记创建时间
+n_update_time	笔记更新时间
 
-## 截图预览
+Bmob(包含http ， json)云数据库
+表	表名
+User表	User
+Note表	Note
+Glide框架工具
+用来实现导入头像图片，NoteListFragment里面笔记展示列表中带图片的子项图片压缩展示的实现(如果直接使用图片源资源，不压缩，会出现)
+Fragment使用
+用来实现MainActivity里面各种功能布局的切换
+CoordLayout，ConstantLayout ， LinerLayout等布局的使用
+用来实现对各种布局需要的实现，实现一些比较美观的界面
+MdiaPlayer工具
+开源项目cuteRecorder的使用，开源项目地址
+https://github.com/GodisGod/cuteRecorder
+使用该项目实现本项目的录音功能
+开源项目WaveLineView的使用，开源项目地址
+https://github.com/Jay-Goo/WaveLineView
+使用该项目实现本项目录音时动态的波浪效果
+开源项目XRichText的使用，开源项目地址
+https://github.com/sendtion/XRichText
+使用该项目实现本项目的富文本编辑功能
+开源项目YingBeautyNote的使用，开源项目地址
+https://github.com/HuTianQi/YingBeautyNote
+使用该项目借鉴其更改项目主题功能，以及控件Circle Image View
+开源项目Matisse的使用，开源项目地址
+https://github.com/zhihu/Matisse
+该项目具有完整的图片选择功能
+Bmob开发文档使用，地址
+http://doc.bmob.cn/data/android/develop_doc/#2
+Bmob开发的免费云端
+因为Bmob上游服务商又拍云对文件域名的限制，短时间内没有通过Bmob是实现文件存储，即图片和录音存储问题，Bmob仅用来实现用户存储和笔记内容存储
+AppWidget开发参考文章
+《Android之AppWidget开发浅析》，地址：https://blog.csdn.net/feng020a/article/details/54917798
+《Android列表小部件（Widget）开发详解》，地址：https://blog.csdn.net/qq_20521573/article/details/79174481
 
-![笔记列表](http://p695w3yko.bkt.clouddn.com/18-4-5/19166796.jpg?imageMogr2/thumbnail/!35p)
-![文字笔记详情](http://p695w3yko.bkt.clouddn.com/18-4-5/57787376.jpg?imageMogr2/thumbnail/!35p)
-![连续插入多图](http://p695w3yko.bkt.clouddn.com/18-4-5/72572379.jpg?imageMogr2/thumbnail/!35p)
-![编辑笔记](http://p695w3yko.bkt.clouddn.com/18-4-5/55920273.jpg?imageMogr2/thumbnail/!35p)
-![图片笔记详情](http://p695w3yko.bkt.clouddn.com/18-4-5/78527283.jpg?imageMogr2/thumbnail/!35p)
-
-## 使用方式
-#### 1. 作为module导入
-把xrichtext作为一个module导入你的工程。
-
-#### 2. gradle依赖
-
-```
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-dependencies {
-    implementation 'com.github.sendtion:XRichText:1.9.1'
-}
-```
-
-如果出现support版本不一致问题，请排除XRichText中的support库，或者升级自己的support库为28.0.0版本。
-Glide版本为4.9.0，依赖于28版本库，如果你用的为低版本，同样的处理方式。
-使用方式：
-```
-implementation ('com.github.sendtion:XRichText:1.9.1') {
-    exclude group: 'com.android.support'
-    exclude group: 'com.github.bumptech.glide' //当你的项目使用Glide4.0以下版本时建议添加此项
-}
-```
-
-## 具体使用
-在xml布局中添加基于EditText编辑器（可编辑）
-```
-<com.sendtion.xrichtext.RichTextEditor
-    android:id="@+id/et_new_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:rt_editor_text_line_space="6dp"
-    app:rt_editor_image_height="500"
-    app:rt_editor_image_bottom="10"
-    app:rt_editor_text_init_hint="在这里输入内容"
-    app:rt_editor_text_size="16sp"
-    app:rt_editor_text_color="@color/grey_900"/>
-```
-
-在xml布局中添加基于TextView编辑器（不可编辑）
-```
-<com.sendtion.xrichtext.RichTextView
-    android:id="@+id/tv_note_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:rt_view_text_line_space="6dp"
-    app:rt_view_image_height="0"
-    app:rt_view_image_bottom="10"
-    app:rt_view_text_size="16sp"
-    app:rt_view_text_color="@color/grey_900"/>
-```
-
-### 自定义属性
-
-具体参考Demo
-
-- RichTextView
-```
-rt_view_image_height        图片高度，默认为0自适应，可以设置为固定数值，如500、800等
-rt_view_image_bottom        上下两张图片的间隔，默认10
-rt_view_text_size           文字大小，使用sp单位，如16sp
-rt_view_text_color          文字颜色，使用color资源文件
-rt_view_text_line_space     字体行距，跟TextView使用一样，比如6dp
-```
-
-- RichTextEditor
-```
-rt_editor_image_height      图片高度，默认为500，可以设置为固定数值，如500、800等
-rt_editor_image_bottom      上下两张图片的间隔，默认10
-rt_editor_text_init_hint    默认提示文字，默认为“请输入内容”
-rt_editor_text_size         文字大小，使用sp单位，如16sp
-rt_editor_text_color        文字颜色，使用color资源文件
-rt_editor_text_line_space   字体行距，跟TextView使用一样，比如6dp
-```
-
-**我把数据保存为了html格式，生成字符串存储到了数据库。**
-### 生成数据
-```
-String noteContent = getEditData();
-
-private String getEditData() {
-    List<RichTextEditor.EditData> editList = et_new_content.buildEditData();
-    StringBuffer content = new StringBuffer();
-    for (RichTextEditor.EditData itemData : editList) {
-        if (itemData.inputStr != null) {
-            content.append(itemData.inputStr);
-        } else if (itemData.imagePath != null) {
-            content.append("<img src=\"").append(itemData.imagePath).append("\"/>");
-        }
-    }
-    return content.toString();
-}
-```
-
-### 显示数据
-```
-et_new_content.post(new Runnable() {
-     @Override
-     public void run() {
-         showEditData(content);
-     }
- });
-
-protected void showEditData(String content) {
-    et_new_content.clearAllLayout();
-    List<String> textList = StringUtils.cutStringByImgTag(content);
-    for (int i = 0; i < textList.size(); i++) {
-        String text = textList.get(i);
-        if (text.contains("<img")) {
-            String imagePath = StringUtils.getImgSrc(text);
-            int width = ScreenUtils.getScreenWidth(this);
-            int height = ScreenUtils.getScreenHeight(this);
-            et_new_content.measure(0,0);
-            Bitmap bitmap = ImageUtils.getSmallBitmap(imagePath, width, height);
-            if (bitmap != null){
-                et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(), bitmap, imagePath);
-            } else {
-            et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), text);
-            }
-            et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), text);
-        }
-    }
-}
-```
-### 图片点击事件
-```
-tv_note_content.setOnRtImageClickListener(new RichTextView.OnRtImageClickListener() {
-    @Override
-    public void onRtImageClick(String imagePath) {
-        ArrayList<String> imageList = StringUtils.getTextFromHtml(myContent, true);
-        int currentPosition = imageList.indexOf(imagePath);
-        showToast("点击图片："+currentPosition+"："+imagePath);
-        // TODO 点击图片预览
-    }
-});
-```
-
-### 具体的使用方式，请参考Demo代码。
-
-### 更新历史
-
-###  v1.9.1  2019.04.30
-- 图片点击事件接口返回点击的View
-- 修复图片显示时高度拉伸变形问题
-- Demo中实现了点击图片放大浏览功能
-- Support支持库升级为28.0.0
-
-###  v1.9.0  2019.04.10
-- 编辑时支持关键词高亮
-- 修复插入图片时空指针异常
-- 代码异常处理
-
-#### v1.8  2018.12.02
-- 修复编辑时设置文字颜色无效的问题
-- 编辑时添加和删除图片加入动画效果
-
-#### v1.6  2018.11.16
-- RxJava升级到2.2.3版本，RxAndroid升级到2.1.0版本
-- 编辑图片时支持自适应高度，高度设置为0即自适应，比如app:rt_editor_image_height="0"
-- 修改字体大小设置方式，像正常使用带着单位，比如app:rt_editor_text_size="16sp"
-- 支持设置字体行间距，比如app:rt_editor_text_line_space="6dp"
-- 修复xrichtext库及Demo中的各种崩溃异常
-
-#### v1.5  2018.07.10
-- 修复详情页连续加载多张图片导致后续图片都跟第一张图片相同高度的问题
-- 修复Demo插入图片后点击图片导致空指针异常的问题
-- 去掉Demo插入图片后会插入一张网络图片的测试代码
-
-#### v1.4  2018.06.22
-- 添加自定义属性，可以设置图片高度，相邻图片间隔，文字大小和颜色
-- 修复没有实现图片删除接口导致的崩溃问题，开放图片删除接口
-- 添加点击图片查看大图的功能，开放图片点击接口
-- 加入崩溃日志信息展示，加入崩溃日志信息发送到邮件
-- 优化图片插入代码，删除多余的无用代码
-
-#### v1.3  2018.05.05
-- 更新Glide依赖版本为4.7.1，Glide4使用方式：http://bumptech.github.io/glide/doc/getting-started.html
-- 开发环境更新到AS 3.1.2 + Gradle 4.4
-- 优化图片插入的逻辑
-- 在Demo中加入插入网络图片的示例代码
-- 在Demo中图片选择器更换为知乎matisse
-
-#### v1.2  2018.04.05
-- 编辑笔记时，使用接口回调在外部处理图片的删除操作，可以自行实现删除本地图片还是网络图片
-- 实现网络图片的加载，插入图片时，可以传入本地图片SD卡路径，也可以传入网络图片地址
-- 在新建或编辑笔记时，连续多张图片之间插入输入框，方便在图片间输入文本内容
-- 修复在文件中间插入图片时，导致的后面文字丢失的问题
-- 修复连续插入多张图片时，会出现图片倒序插入的问题
-
-#### v1.1	2017.03.27
-- 优化内存占用，解决内存溢出问题
-- 结合RxJava使用（参考Demo）
-- 支持连续插入多张图片不卡顿（参考Demo）
-- 解决插入图片导致的卡顿和崩溃
-
-#### v1.0	2016.10.26
-- 初次提交
-- 实现插入图片
-- 实现图文混排
-- 实现编辑和保存
-
-## 感谢
-本库参考了以下项目，感谢各位大神的优秀作品！
-- https://github.com/xmuSistone/android-animate-RichEditor
-- https://github.com/KDF5000/RichEditText
-
-## 其他
-- 个人博客：http://www.sendtion.cn
-- CSDN：http://blog.csdn.net/shuyou612
-- GitHub：https://github.com/sendtion
-- 欢迎大家fork、star，也欢迎大家参与修改。
-
-## License
-```
-Copyright 2019 sendtion
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
