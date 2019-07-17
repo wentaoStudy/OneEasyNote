@@ -6,7 +6,7 @@
 
 ##
 
-开源项目cuteRecorder的使用，开源项目地址
+开源项目cuteRecorder的使用，开源项目地址 <br>
 https://github.com/GodisGod/cuteRecorder
 使用该项目实现本项目的录音功能
 开源项目WaveLineView的使用，开源项目地址
