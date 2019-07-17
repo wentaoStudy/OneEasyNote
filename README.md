@@ -7,28 +7,28 @@
 ##
 
 开源项目cuteRecorder的使用，开源项目地址 <br>
-https://github.com/GodisGod/cuteRecorder
-使用该项目实现本项目的录音功能
-开源项目WaveLineView的使用，开源项目地址
-https://github.com/Jay-Goo/WaveLineView
-使用该项目实现本项目录音时动态的波浪效果
-开源项目XRichText的使用，开源项目地址
-https://github.com/sendtion/XRichText
-使用该项目实现本项目的富文本编辑功能
-开源项目YingBeautyNote的使用，开源项目地址
-https://github.com/HuTianQi/YingBeautyNote
-使用该项目借鉴其更改项目主题功能，以及控件Circle Image View
-开源项目Matisse的使用，开源项目地址
-https://github.com/zhihu/Matisse
-该项目具有完整的图片选择功能
-Bmob开发文档使用，地址
-http://doc.bmob.cn/data/android/develop_doc/#2
-Bmob开发的免费云端
-因为Bmob上游服务商又拍云对文件域名的限制，短时间内没有通过Bmob是实现文件存储，即
-图片和录音存储问题，Bmob仅用来实现用户存储和笔记内容存储
-AppWidget开发参考文章
-《Android之AppWidget开发浅析》，地址：
-https://blog.csdn.net/feng020a/article/details/54917798
-《Android列表小部件（Widget）开发详解》，地址：
-https://blog.csdn.net/qq_20521573/article/details/79174481
+https://github.com/GodisGod/cuteRecorder <br>
+使用该项目实现本项目的录音功能 <br>
+开源项目WaveLineView的使用，开源项目地址 <br>
+https://github.com/Jay-Goo/WaveLineView <br>
+使用该项目实现本项目录音时动态的波浪效果 <br>
+开源项目XRichText的使用，开源项目地址 <br>
+https://github.com/sendtion/XRichText <br>
+使用该项目实现本项目的富文本编辑功能 <br>
+开源项目YingBeautyNote的使用，开源项目地址 <br>
+https://github.com/HuTianQi/YingBeautyNote <br>
+使用该项目借鉴其更改项目主题功能，以及控件Circle Image View <br>
+开源项目Matisse的使用，开源项目地址 <br>
+https://github.com/zhihu/Matisse <br>
+该项目具有完整的图片选择功能 <br>
+Bmob开发文档使用，地址 <br>
+http://doc.bmob.cn/data/android/develop_doc/#2 <br>
+Bmob开发的免费云端 <br>
+因为Bmob上游服务商又拍云对文件域名的限制，短时间内没有通过Bmob是实现文件存储，即 <br>
+图片和录音存储问题，Bmob仅用来实现用户存储和笔记内容存储 <br>
+AppWidget开发参考文章 <br>
+《Android之AppWidget开发浅析》，地址： <br>
+https://blog.csdn.net/feng020a/article/details/54917798 <br>
+《Android列表小部件（Widget）开发详解》，地址： <br>
+https://blog.csdn.net/qq_20521573/article/details/79174481 <br>
 
